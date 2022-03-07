@@ -2,7 +2,7 @@ services:
   rsyslogd:
     build:
       context: src
-    image: batatch/rsyslogd:latest
+    image: batatch/docker-rsyslog-logrotate:latest
 
     ports:
       - "5514:514/tcp"
