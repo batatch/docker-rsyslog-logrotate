@@ -1,0 +1,13 @@
+services:
+  rsyslogd:
+    build:
+      context: src
+    image: batatch/rsyslogd:latest
+
+    ports:
+      - "5514:514/tcp"
+      - "5514:514/udp"
+    volumes:
+      - ./run:/rsyslog/run
+      - ./log:/var/log
+
