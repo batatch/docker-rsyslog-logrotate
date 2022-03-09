@@ -29,6 +29,17 @@ RUN mkdir -p /etc/rsyslog.d \
 COPY config/rsyslog.conf /etc/rsyslog.conf
 
 
+## publish settings
+
+EXPOSE 514
+
+VOLUME /rsyslog/run
+VOLUME /var/log
+
+VOLUME /etc/rsyslog.d
+VOLUME /etc/logrotate.d
+
+
 ## entrypoint setting
 
 COPY entrypoint.sh /entrypoint.sh
