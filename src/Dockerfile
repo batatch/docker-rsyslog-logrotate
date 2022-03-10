@@ -29,6 +29,12 @@ RUN mkdir -p /etc/rsyslog.d \
 COPY config/rsyslog.conf /etc/rsyslog.conf
 
 
+## logrotate settings
+
+RUN mv /etc/logrotate.d /etc/logrotate.d.orig \
+ && mkdir -p /etc/logrotate.d
+
+
 ## publish settings
 
 EXPOSE 514
