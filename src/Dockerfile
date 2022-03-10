@@ -2,12 +2,15 @@
 FROM alpine:3.15
 
 RUN apk add --update \
+        tzdata \
         bash \
         tini \
         runit \
         rsyslog \
         logrotate \
     && rm -rf /var/cache/apk/*
+
+ENV TZ=
 
 
 ## runit settings
