@@ -24,18 +24,14 @@ COPY service/rsyslog.run /runit/service/rsyslog/run
 RUN chmod +x /runit/service/*/run
 
 
-## rsyslog settings
+## rsyslog & logrotate settings
 
 RUN mkdir -p /etc/rsyslog.d \
- && mkdir -p /rsyslog/run
+ && mkdir -p /rsyslog/run \
+ && mv /etc/logrotate.d /etc/logrotate.d.orig \
+ && mkdir -p /etc/logrotate.d
 
 COPY config/rsyslog.conf /etc/rsyslog.conf
-
-
-## logrotate settings
-
-RUN mv /etc/logrotate.d /etc/logrotate.d.orig \
- && mkdir -p /etc/logrotate.d
 
 
 ## publish settings
