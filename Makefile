@@ -42,7 +42,8 @@ test-udp:     ## Test with udp connection
 		"LOG:udp: Hello world."
 
 
-test-stress-%:  ## Test of stress (%=socket/tcp/udp)
+_test-stress:
+	@echo $(LOGGER)
 	@_bgn="" ; _cnt=0 ; \
 	while true ; \
 	do \
@@ -53,13 +54,15 @@ test-stress-%:  ## Test of stress (%=socket/tcp/udp)
 		_dif=$$( expr $${_sec} - $${_bgn} ) ; \
 		printf "TEST %6d / %5d [lines/sec] @ %s\n" $${_cnt} $${_dif} $${_hms} ; \
 		sleep 0.005s ; \
-	done | \
-	if   test "$*" == "tcp" ; then \
-		logger --server localhost --port 5514 --tcp --tag test/tcp ; \
-	elif test "$*" == "udp" ; then \
-		logger --server localhost --port 5514 --udp --tag test/udp ; \
-	else \
-		logger --socket ./run/socket --tag test/socket ; \
-	fi
+	done | $(LOGGER)
+
+test-stress-socket:  ## Stress test with socket
+	@make --no-print-directory LOGGER="logger --socket ./run/socket --tag test/socket" _test-stress
+
+test-stress-tcp:     ## Stress test with tcp connection
+	@make --no-print-directory LOGGER="logger --server localhost --port 5514 --tcp --tag test/tcp" _test-stress
+
+test-stress-udp:     ## Stress test with udp connection
+	@make --no-print-directory LOGGER="logger --server localhost --port 5514 --udp --tag test/udp" _test-stress
 
 # EOF
